@@ -78,7 +78,14 @@ int main() {
 	mainWindow->setWindowShape(mainWindowSettings.width, mainWindowSettings.height);
 
 	// Set the kinect window on Screen n - 1
-	ofGLFWWindowSettings projectorWindowSettings = setWindowDimensions(monitors[count - 1], false);
+
+	ofGLFWWindowSettings projectorWindowSettings;
+
+	for (int i = 1; i < count; ++i) {
+		projectorWindowSettings = setWindowDimensions(monitors[i], false);
+		if (projectorWindowSettings.width == 1280 && projectorWindowSettings.height == 768)
+			break;
+	}
 	projectorWindowSettings.shareContextWith = mainWindow;
 	shared_ptr<ofAppBaseWindow> projectorWindow = ofCreateWindow(projectorWindowSettings);
 	projectorWindow->setVerticalSync(false);
